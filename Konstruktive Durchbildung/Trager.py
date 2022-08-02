@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 import math
+from tkinter import *
+
+
+"""TODO: tkinter mit Dropdowns + Klasse oder Methode für Umrechnungen fa Einheiten"""
 
 
 class Trager:
@@ -41,6 +45,15 @@ class Trager:
         widerstandsmoment = self.breite * math.pow(self.hohe, 2) / 6
         return querschnittsFlache, volumen, tragheitsmoment, widerstandsmoment
 
+    
+    def mindestBewehrung(self):
+        minimum = 0.0013 * self.breite * self.d
+        mindestbewehrung = 0.26 * self.fctm / self.fyk * self.breite * self.d
+        if mindestbewehrung > minimum:
+            return mindestbewehrung * 10000
+        else:
+            return minimum * 10000
+
 
 # die orten konn man ah lösn, indem man if condition bei mindestbewehrung obfrog ob balken oder stutze
 class Balken(Trager):
@@ -58,5 +71,7 @@ if __name__ == "__main__":
     
     X1 = Balken(1, 0.5, 1.3, 14, 1.23, "C40/50", 550)
     # print(type(X1.betongute))
-    print(X1.fctm)
+    # print(X1.fctm)
+    mindestbewehrungX1 = X1.mindestBewehrung()
+    print(mindestbewehrungX1) 
     
