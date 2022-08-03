@@ -5,6 +5,7 @@ from tkinter import *
 
 
 """TODO: tkinter mit Dropdowns + Klasse oder Methode für Umrechnungen fa Einheiten"""
+"""TODO: olls afn gleichn Stond bringn (fabios pc und mein laptop!!!! und èberflèssiges lòschen)"""
 
 
 class Trager:
@@ -45,21 +46,21 @@ class Trager:
         widerstandsmoment = self.breite * math.pow(self.hohe, 2) / 6
         return querschnittsFlache, volumen, tragheitsmoment, widerstandsmoment
 
-    
-    def mindestBewehrung(self):
-        minimum = 0.0013 * self.breite * self.d
-        mindestbewehrung = 0.26 * self.fctm / self.fyk * self.breite * self.d
-        if mindestbewehrung > minimum:
-            return mindestbewehrung * 10000
-        else:
-            return minimum * 10000
-
 
 # die orten konn man ah lösn, indem man if condition bei mindestbewehrung obfrog ob balken oder stutze
 class Balken(Trager):
 
     def __init__(self, id, breite, hohe, lange, d, betongute, fyk) -> None:
         super().__init__(id, breite, hohe, lange, d, betongute, fyk)
+
+
+    def mindestBewehrung(self):
+        minimum = 0.0013 * self.breite * self.d
+        mindestbewehrung = 0.26 * self.fctm / self.fyk * self.breite * self.d
+        if mindestbewehrung >= minimum:
+            return mindestbewehrung * 10000
+        else:
+            return minimum * 10000
 
 
 class Stutzen(Trager):
@@ -71,6 +72,7 @@ if __name__ == "__main__":
     
     X1 = Balken(1, 0.5, 1.3, 14, 1.23, "C40/50", 550)
     # print(type(X1.betongute))
+    # print(X1.fck)
     # print(X1.fctm)
     mindestbewehrungX1 = X1.mindestBewehrung()
     print(mindestbewehrungX1) 
